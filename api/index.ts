@@ -16,6 +16,7 @@ export default async function handler(
 			res.statusCode = 404
 			res.setHeader('Content-Type', 'text/html')
 			res.end('<p>Not found</p>')
+			return
 		}
 		const parsedReq = parseRequest(req)
 		const html = getHtml(parsedReq)

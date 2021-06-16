@@ -1,5 +1,6 @@
 import { IncomingMessage } from 'http'
 import { ParsedRequest, Theme } from './types'
+import { BadRequest } from './error'
 
 export function parseRequest(req: IncomingMessage) {
 	console.log('HTTP ' + req.url)
@@ -11,16 +12,16 @@ export function parseRequest(req: IncomingMessage) {
 	var { fontSize, images, widths, heights, theme, md, font } = query || {}
 
 	if (Array.isArray(fontSize)) {
-		throw new Error('Expected a single fontSize')
+		throw new BadRequest('Expected a single fontSize')
 	}
 	if (Array.isArray(theme)) {
-		throw new Error('Expected a single theme')
+		throw new BadRequest('Expected a single theme')
 	}
 	if (Array.isArray(font)) {
-		throw new Error('Expected a single font')
+		throw new BadRequest('Expected a single font')
 	}
 	if (Array.isArray(md)) {
-		throw new Error('Expected a single "md" parameter')
+		throw new BadRequest('Expected a single "md" parameter')
 	}
 
 	const arr = (pathname || '/').slice(1).split('.')

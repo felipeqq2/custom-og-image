@@ -1,11 +1,16 @@
 import marked from 'marked'
 import { sanitizeHtml } from './sanitizer'
-import { ParsedRequest } from './types'
+import { ParsedRequest, Background } from './types'
 const twemoji = require('twemoji')
 const twOptions = { folder: 'svg', ext: '.svg' }
 const emojify = (text: string) => twemoji.parse(text, twOptions)
 
-function getCss(theme: string, fontSize: string, font: string) {
+function getCss(
+	theme: string,
+	fontSize: string,
+	font: string,
+	image: Background
+) {
 	let background = 'white'
 	let foreground = 'black'
 
@@ -13,10 +18,19 @@ function getCss(theme: string, fontSize: string, font: string) {
 		background = 'black'
 		foreground = 'white'
 	}
+	if (image.url !== 'none') {
+		background = `rgba(0, 0, 0, .${image.brightness})`
+	}
 	return `
     body {
-        background: ${background};
+        position: relative;
+        background-color: ${background};
+        background-image: ${image.url};
         background-size: 100px 100px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        background-blend-mode: darken;
         height: 100vh;
         display: flex;
         text-align: center;
@@ -69,7 +83,8 @@ function getCss(theme: string, fontSize: string, font: string) {
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-	const { text, theme, md, fontSize, images, widths, heights, font } = parsedReq
+	const { text, theme, md, fontSize, images, widths, heights, font, bg } =
+		parsedReq
 	return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
@@ -77,7 +92,7 @@ export function getHtml(parsedReq: ParsedRequest) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500;700&family=${font}:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <style>
-        ${getCss(theme, fontSize, font)}
+        ${getCss(theme, fontSize, font, bg)}
     </style>
     <body>
         <div>

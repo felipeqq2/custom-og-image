@@ -4,27 +4,29 @@
     <img align="right" src="https://og-image.vercel.app/tweet.png" height="300" />
 </a>
 
-Serverless service that generates dynamic Open Graph images that you can embed in your `<meta>` tags. **Now handling custom fonts and logos.**
+Serverless service that generates dynamic Open Graph images that you can embed in your `<meta>` tags. **Now handling custom fonts, logos and background.**
 
 For each keystroke, headless chromium is used to render an HTML page and take a screenshot of the result which gets cached.
 
 See the image embedded in the tweet for a real use case.
 
 ```
-https://custom-og-images.vercel.app/{text}{extension}?theme={theme}&md={markdown}&fontSize={fontSize}&images={imageUrl}&widths={width}&heights={height}&font={font}
+https://custom-og-images.vercel.app/{text}{extension}?theme={theme}&md={markdown}&fontSize={fontSize}&images={imageUrl}&widths={width}&heights={height}&font={font}&bg={background}&brightness={brightness}
 ```
 
-| Placeholder | Description                                                           | Default     |
-| :---------- | :-------------------------------------------------------------------- | :---------- |
-| text        | The text input (URL encoded)                                          | :x:         |
-| extension   | The file type (supports `.jpeg` and `.png`)                           | `.png`      |
-| theme       | `dark` or `light`                                                     | `light`     |
-| markdown    | If the text should be parsed as markdown (`1`/`true` and `0`/`false`) | `false`     |
-| fontSize    | The text size (with CSS unit: `50px`)                                 | `96px`      |
-| imageUrl    | Image URL (accepts multiple parameters: `&images={}&images={}`)       | Vercel logo |
-| width       | Image width (accepts multiple parameters, for multiple images)        | auto        |
-| height      | Image height (accepts multiple parameters, for multiple images)       | auto        |
-| font        | The font should be URL encoded and available on Google Fonts          | Inter       |
+| Placeholder | Description                                                             | Default     |
+| :---------- | :---------------------------------------------------------------------- | :---------- |
+| text        | The text input (URL encoded)                                            | :x:         |
+| extension   | The file type (supports `.jpeg` and `.png`)                             | `.png`      |
+| theme       | `dark` or `light`                                                       | `light`     |
+| markdown    | If the text should be parsed as markdown (`1`/`true` and `0`/`false`)   | `false`     |
+| fontSize    | The text size (with CSS unit: `50px`)                                   | `96px`      |
+| imageUrl    | Image URL (accepts multiple parameters: `&images={}&images={}`)         | Vercel logo |
+| width       | Image width (accepts multiple parameters, for multiple images)          | auto        |
+| height      | Image height (accepts multiple parameters, for multiple images)         | auto        |
+| font        | The font should be URL encoded and available on Google Fonts            | Inter       |
+| background  | Background image URL (if present, theme will always be dark)            | :x:         |
+| brightness  | Background image brightness - any number from 0 (lighter) to 9 (darker) | 5           |
 
 ## What is an Open Graph Image?
 

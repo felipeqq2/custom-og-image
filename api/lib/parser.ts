@@ -9,7 +9,8 @@ export function parseRequest(req: IncomingMessage) {
 		'http://' + process.env.VERCEL_URL
 	)
 	const query: any = groupParamsByKey(searchParams)
-	var { fontSize, images, widths, heights, theme, md, font } = query || {}
+	var { fontSize, images, widths, heights, theme, md, font, bg, brightness } =
+		query || {}
 
 	if (Array.isArray(fontSize)) {
 		throw new BadRequest('Expected a single fontSize')
@@ -22,6 +23,12 @@ export function parseRequest(req: IncomingMessage) {
 	}
 	if (Array.isArray(md)) {
 		throw new BadRequest('Expected a single "md" parameter')
+	}
+	if (Array.isArray(bg)) {
+		throw new BadRequest('Expected a single background')
+	}
+	if (Array.isArray(brightness)) {
+		throw new BadRequest('Expected a single "brightness" parameter')
 	}
 
 	const arr = (pathname || '/').slice(1).split('.')
@@ -45,13 +52,14 @@ export function parseRequest(req: IncomingMessage) {
 	const parsedRequest: ParsedRequest = {
 		fileType: extension === 'jpeg' ? extension : 'png',
 		text: decodeURIComponent(text),
-		theme: theme === 'dark' ? 'dark' : 'light',
+		theme: bg || theme === 'dark' ? 'dark' : 'light',
 		md: md === '1' || md === 'true',
 		fontSize: fontSize || '96px',
 		images: getArray(images),
 		widths: getArray(widths),
 		heights: getArray(heights),
-		font: font || 'Inter'
+		font: font || 'Inter',
+		bg: { url: bg ? `url(${bg})` : 'none', brightness: brightness || 5 }
 	}
 	parsedRequest.images = getDefaultImages(
 		parsedRequest.images,

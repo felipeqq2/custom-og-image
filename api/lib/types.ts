@@ -16,4 +16,5 @@ export interface ParsedRequest {
 	heights: string[]
 	font: string
 	bg: Background
+	line: string
 }

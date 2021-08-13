@@ -9,7 +9,8 @@ function getCss(
 	theme: string,
 	fontSize: string,
 	font: string,
-	image: Background
+	image: Background,
+	line: string
 ) {
 	let background = 'white'
 	let foreground = 'black'
@@ -78,12 +79,12 @@ function getCss(
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
         color: ${foreground};
-        line-height: 1.8;
+        line-height: ${line};
     }`
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-	const { text, theme, md, fontSize, images, widths, heights, font, bg } =
+	const { text, theme, md, fontSize, images, widths, heights, font, bg, line } =
 		parsedReq
 	return `<!DOCTYPE html>
 <html>
@@ -92,7 +93,7 @@ export function getHtml(parsedReq: ParsedRequest) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500;700&family=${font}:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <style>
-        ${getCss(theme, fontSize, font, bg)}
+        ${getCss(theme, fontSize, font, bg, line)}
     </style>
     <body>
         <div>

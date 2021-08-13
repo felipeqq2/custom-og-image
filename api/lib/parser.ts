@@ -21,8 +21,18 @@ export function parseRequest(req: IncomingMessage) {
 
 	console.log(query)
 
-	var { fontSize, images, widths, heights, theme, md, font, bg, brightness } =
-		query
+	var {
+		fontSize,
+		images,
+		widths,
+		heights,
+		theme,
+		md,
+		font,
+		bg,
+		brightness,
+		line
+	} = query
 
 	if (Array.isArray(fontSize)) {
 		throw new BadRequest('Expected a single fontSize')
@@ -41,6 +51,9 @@ export function parseRequest(req: IncomingMessage) {
 	}
 	if (Array.isArray(brightness)) {
 		throw new BadRequest('Expected a single "brightness" parameter')
+	}
+	if (Array.isArray(line)) {
+		throw new BadRequest('Expected a single "line" parameter')
 	}
 
 	const arr = (pathname || '/').slice(1).split('.')
@@ -71,7 +84,8 @@ export function parseRequest(req: IncomingMessage) {
 		widths: getArray(widths),
 		heights: getArray(heights),
 		font: font || 'Inter',
-		bg: { url: bg ? `url(${bg})` : 'none', brightness: +brightness || 5 }
+		bg: { url: bg ? `url(${bg})` : 'none', brightness: +brightness || 5 },
+		line: line || '1.8'
 	}
 	parsedRequest.images = getDefaultImages(
 		parsedRequest.images,

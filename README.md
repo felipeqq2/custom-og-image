@@ -11,7 +11,7 @@ For each keystroke, headless chromium is used to render an HTML page and take a 
 See the image embedded in the tweet for a real use case.
 
 ```
-https://custom-og-images.vercel.app/{text}{extension}?theme={theme}&md={markdown}&fontSize={fontSize}&images={imageUrl}&widths={width}&heights={height}&font={font}&bg={background}&brightness={brightness}
+https://custom-og-images.vercel.app/{text}{extension}?theme={theme}&md={markdown}&fontSize={fontSize}&images={imageUrl}&widths={width}&heights={height}&font={font}&bg={background}&brightness={brightness}&line={line}
 ```
 
 | Placeholder | Description                                                             | Default     |
@@ -27,6 +27,7 @@ https://custom-og-images.vercel.app/{text}{extension}?theme={theme}&md={markdown
 | font        | The font should be URL encoded and available on Google Fonts            | Inter       |
 | background  | Background image URL (if present, theme will always be dark)            | :x:         |
 | brightness  | Background image brightness - any number from 0 (lighter) to 9 (darker) | 5           |
+| line        | `line-height` parameter for title                                       | 1.8         |
 
 ## What is an Open Graph Image?
 

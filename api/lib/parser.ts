@@ -8,9 +8,21 @@ export function parseRequest(req: IncomingMessage) {
 		req.url || '/',
 		'http://' + process.env.VERCEL_URL
 	)
-	const query: any = groupParamsByKey(searchParams)
+
+	let query: Record<string, string | string[]> = {}
+	searchParams.forEach((v, k) => {
+		if (query[k]) {
+			const current = query[k]
+
+			if (Array.isArray(current)) query[k] = [...current, v]
+			else query[k] = [current, v]
+		} else query[k] = v
+	})
+
+	console.log(query)
+
 	var { fontSize, images, widths, heights, theme, md, font, bg, brightness } =
-		query || {}
+		query
 
 	if (Array.isArray(fontSize)) {
 		throw new BadRequest('Expected a single fontSize')
@@ -59,7 +71,7 @@ export function parseRequest(req: IncomingMessage) {
 		widths: getArray(widths),
 		heights: getArray(heights),
 		font: font || 'Inter',
-		bg: { url: bg ? `url(${bg})` : 'none', brightness: brightness || 5 }
+		bg: { url: bg ? `url(${bg})` : 'none', brightness: +brightness || 5 }
 	}
 	parsedRequest.images = getDefaultImages(
 		parsedRequest.images,
@@ -88,21 +100,4 @@ function getDefaultImages(images: string[], theme: Theme): string[] {
 		return [defaultImage]
 	}
 	return images
-}
-
-function groupParamsByKey(params: any) {
-	return [...params.entries()].reduce((acc, tuple) => {
-		const [key, val] = tuple
-		if (acc.hasOwnProperty(key)) {
-			if (Array.isArray(acc[key])) {
-				acc[key] = [...acc[key], val]
-			} else {
-				acc[key] = [acc[key], val]
-			}
-		} else {
-			acc[key] = val
-		}
-
-		return acc
-	}, {})
 }

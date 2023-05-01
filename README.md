@@ -1,3 +1,8 @@
+# **Warning**
+Dependabot is yelling at me about a bunch of vulnerabilities on this repo. I'm not interested in doing anything about it, and even Vercel abandoned their original [repo](https://github.com/vercel/og-image). You should use [@vercel/og](https://vercel.com/blog/introducing-vercel-og-image-generation-fast-dynamic-social-card-images) (or so they say). It's not as simple as this API, but it does not rely on a full-blown headless chromium to generate a single png. Maybe I'll try to reproduce this API with a better architecture (maybe their own tools) later. Who knows.
+
+---
+
 # [Open Graph Image as a Service](https://og-image.vercel.app)
 
 <a href="https://twitter.com/vercel">
